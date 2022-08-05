@@ -1,12 +1,12 @@
-@extends('layouts.auth')
-@section('content')
-    <div class="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl dark:bg-gray-800">
+@extends('layouts.FrontPage')
+@section('template')
+    <div class="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl dark:bg-gray-800 mt-10">
         <div class="flex flex-col overflow-y-auto md:flex-row">
             <div class="h-32 md:h-auto md:w-1/2">
                 <img
                         aria-hidden="true"
                         class="object-cover w-full h-full dark:hidden"
-                        src="../assets/img/login-office.jpeg"
+                        src="{{ asset('assets/img/logoDiskominfo-.jpg') }}"
                         alt="Office"
                 />
                 <img
@@ -25,9 +25,9 @@
                     <x-auth-validation-errors class="mb-4" :errors="$errors"/>
 
                     <h1
-                            class="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200"
+                            class="mb-4 text-xl text-center font-semibold text-gray-700 dark:text-gray-200"
                     >
-                        Login
+                        Login Admin
                     </h1>
                     <form method="POST" action="{{ route('login') }}">
                         @csrf

@@ -7,7 +7,7 @@
                 class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
                 href="{{ route('admin.home')}}"
         >
-            Windmill
+            Diskominfo
         </a>
         <ul class="mt-6">
             <li class="relative px-6 py-3">
@@ -40,13 +40,13 @@
         </ul>
         <ul>
             <li class="relative px-6 py-3">
-                @if (request()->routeIs('admin.forms'))
+                @if (request()->routeIs('admin.forms.index'))
                     <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
                         aria-hidden="true"></span>
                     @endif
                 <a
                         class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                        href="{{ route('admin.forms') }}"
+                        href="{{ route('admin.forms.index') }}"
                 >
                     <svg
                             class="w-5 h-5"
@@ -62,17 +62,17 @@
                                 d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
                         ></path>
                     </svg>
-                    <span class="ml-4">Forms</span>
+                    <span class="ml-4">Berita</span>
                 </a>
             </li>
             <li class="relative px-6 py-3">
-                @if (request()->routeIs('admin.cards'))
+                @if (request()->routeIs('admin.program.index'))
                 <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
                     aria-hidden="true"></span>
                 @endif
                 <a
                         class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                        href="{{ route('admin.cards') }}"
+                        href="{{ route('admin.program.index') }}"
                 >
                     <svg
                             class="w-5 h-5"
@@ -88,17 +88,17 @@
                                 d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
                         ></path>
                     </svg>
-                    <span class="ml-4">Cards</span>
+                    <span class="ml-4">program</span>
                 </a>
             </li>
             <li class="relative px-6 py-3">
-                @if (request()->routeIs('admin.charts'))
+                @if (request()->routeIs('admin.layanan.index'))
                 <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
                     aria-hidden="true"></span>
                 @endif
                 <a
                         class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                        href="{{ route('admin.charts') }}"
+                        href="{{ route('admin.layanan.index') }}"
                 >
                     <svg
                             class="w-5 h-5"
@@ -115,17 +115,17 @@
                         ></path>
                         <path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
                     </svg>
-                    <span class="ml-4">Charts</span>
+                    <span class="ml-4">Layanan</span>
                 </a>
             </li>
             <li class="relative px-6 py-3">
-                @if (request()->routeIs('admin.buttons'))
+                @if (request()->routeIs('admin.publikasi.index'))
                 <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
                     aria-hidden="true"></span>
                 @endif
                 <a
                         class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                        href="{{ route('admin.buttons') }}"
+                        href="{{ route('admin.publikasi.index') }}"
                 >
                     <svg
                             class="w-5 h-5"
@@ -141,17 +141,17 @@
                                 d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"
                         ></path>
                     </svg>
-                    <span class="ml-4">Buttons</span>
+                    <span class="ml-4">Publikasi</span>
                 </a>
             </li>
             <li class="relative px-6 py-3">
-                @if (request()->routeIs('admin.modals'))
+                @if (request()->routeIs('admin.ListData.index'))
                 <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
                     aria-hidden="true"></span>
                 @endif
                 <a
                         class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                        href="{{ route('admin.modals') }}"
+                        href="{{ route('admin.ListData.index') }}"
                 >
                     <svg
                             class="w-5 h-5"
@@ -273,6 +273,7 @@
                     </ul>
                 </template>
             </li>
+            
         </ul>
         <div class="px-6 my-6">
             <button
