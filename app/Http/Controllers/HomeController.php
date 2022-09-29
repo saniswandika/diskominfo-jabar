@@ -19,7 +19,7 @@ class HomeController extends Controller
         $categories = Category::all();
         $posts = post::all();
         $count = DB::table('posts')->count();
-       
+       dd($count);
         return view('halaman_depan.HomeBlog',compact('count','posts','categories'));
     }
 
@@ -50,9 +50,11 @@ class HomeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request,$id)
     {
-        //
+        $name = $request->name;
+        $categories = post::where('title', 'like', "%" . $name . "%")->paginate(10);
+        return view('admin.index',compact('count','posts','categories'));
     }
 
     /**

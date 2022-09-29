@@ -17,14 +17,24 @@ class ProgramController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-
+        if($request->slug){
+            $cari = $request->slug;
+        
+            // mengambil data dari table pegawai sesuai pencarian data
+           $posts = post::select('posts.*','categories.name as nama_categori')->join('categories','categories.id','=' , 'posts.category_id')->where('posts.slug','like',"%".$cari."%")->orderBy('created_at', 'DESC')->paginate(10,['*'],'berita');    
+            $cari = true;
+        //    dd($request->slug);
+        }else{ 
+            $posts = post::select('posts.*','categories.name as nama_categori')->join('categories','categories.id','=' , 'posts.category_id')->where('posts.category_id','3')->orderBy('created_at', 'DESC')->paginate(10,['*'],'berita');    
+            $cari = false;
+        }
+      
         $categories = Category::all();
-        // $posts = post::all();
         $count = DB::table('posts')->where('posts.category_id','3')->count();
-        $posts = post::select('posts.*','categories.name as nama_categori')->join('categories','categories.id','=' , 'posts.category_id')->where('posts.category_id','3')->paginate(8);
-        return view('admin.forms',compact('count','posts','categories'));
+        $data = DB::table('posts')->where('posts.category_id','3')->sum('views');
+        return view('admin.forms',compact('count','posts','categories','cari','data'));
 
     }
 
@@ -33,11 +43,15 @@ class ProgramController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        
-        $categories = Category::all();
-        return view('admin.post.create',compact('categories'));
+
+        $user = Post::findOrFail($request->id);
+        $user->status = $request->status;
+        $user->save();
+        dd($request);
+
+    return response()->json(['message' => 'user status updated successfully.']);
     }
     
 
@@ -50,13 +64,12 @@ class ProgramController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required',
+                'title' => 'required',
                 'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg',
                 'content' => 'required',
                 'slug' => 'required|string|max:255',
                 'category_id' => 'required|exists:App\Models\Category,id'
         ]);
-        $input['mata_kuliah '] = $request->input('mata_kuliah ');
 
 
         if ($request->all()) {
@@ -129,21 +142,50 @@ class ProgramController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, $id)
     {
+        // dd([$request->all(),$id]);
         $request->validate([
             'title' => 'required|string|max:255',
             'slug' => 'required|string|max:255',
-            'description' => 'required',
+            'content' => 'required',
+            'category_id' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
-        $post->title = $request->title;
-        $post->slug = Str::slug($request->slug);
-        $post->description = $request->description;
-        $post->category_id = $request->category_id;
-        $post->save();
+        if ($request->all()) {
+            $uploadPath = public_path('uploads');
 
-        return redirect()->route('admin.forms')->with('status', 'Post Updated Successfully');
+            if (!File::isDirectory($uploadPath)) {
+                File::makeDirectory($uploadPath, 0755, true, true);
+            }
+
+            $file = $request->file('image');
+            $explode = explode('.', $file->getClientOriginalName());
+            $originalName = $explode[0];
+            $extension = $file->getClientOriginalExtension();
+            $rename = 'file_' . date('YmdHis') . '.' . $extension;
+            $mime = $file->getClientMimeType();
+            $filesize = $file->getSize();
+            
+            // $dosen =  $request->nama_pembimbing;
+
+        $file->move($uploadPath, $rename);
+        }
+        $post = post::find($id);
+        $post->update([
+            'title'=> $request->title,
+            'slug'=>Str::slug($request->slug),
+            'content'=> $request->content,
+            'category_id' => $request->category_id,
+            'image' => $rename
+        ]);
+        // $post->title = $request->title;
+        // $post->slug = Str::slug($request->slug);
+        // $post->description = $request->description;
+        // $post->category_id = $request->category_id;
+        // $post->save();
+
+        return back()->with('status', 'Post Updated Successfully');
     }
 
     /**
@@ -157,6 +199,14 @@ class ProgramController extends Controller
         DB::table('posts')->where('id', $id)->delete();
         return back()->with('success', 'Succesfully Added');
     }
+    // public function updateStatus(Request $request)
+    // {
+    // $user = Post::findOrFail($request->id);
+    // $user->status = $request->status;
+    // $user->save();
+
+    // return response()->json(['message' => 'User status updated successfully.']);
+    // }
     function getExcerpt($str, $startPos=0, $maxLength=100) {
         if(strlen($str) > $maxLength) {
             $excerpt   = substr($str, $startPos, $maxLength-3);
@@ -169,4 +219,5 @@ class ProgramController extends Controller
         
         return $excerpt;
     }
+    
 }

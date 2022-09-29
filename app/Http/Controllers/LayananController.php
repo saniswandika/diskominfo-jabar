@@ -21,9 +21,9 @@ class LayananController extends Controller
 
         $categories = Category::all();
         $count = DB::table('posts')->where('posts.category_id','2')->count();
-        $posts = post::select('posts.*','categories.name as nama_categori')->join('categories','categories.id','=' , 'posts.category_id')->where('posts.category_id','2')->paginate(8);
-        
-        return view('admin.charts',compact('count','posts','categories'));
+        $posts = post::select('posts.*','categories.name as nama_categori')->join('categories','categories.id','=' , 'posts.category_id')->where('posts.category_id','2')->orderBy('created_at', 'DESC')->paginate(10,['*'],'berita');     
+        $data = DB::table('posts')->where('posts.category_id','2')->sum('views');
+        return view('admin.charts',compact('count','posts','categories','data'));
 
     }
 

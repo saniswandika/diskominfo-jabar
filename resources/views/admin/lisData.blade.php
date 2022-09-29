@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.1/dist/flowbite.min.css" />
+
           <div class="container px-6 mx-auto grid">
             <h2
               class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
@@ -24,8 +25,8 @@
                           <th class="px-4 py-3">Actions</th>
                       </tr>
                   </thead>
-                  <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                      @foreach ($posts as $post)
+                  {{-- <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                      @foreach ($mailData as $post)
                           <tr class="text-gray-700 dark:text-gray-400">
                               <td class="px-4 py-3">
                                   <div class="flex items-center text-sm">
@@ -89,10 +90,10 @@
                           </tr>
                       @endforeach
                   
-                  </tbody>
+                  </tbody> --}}
               </table>
               </div>
-              <div
+              {{-- <div
                 class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
               >
                 <span class="flex items-center col-span-3">
@@ -108,7 +109,7 @@
                   </nav>
                 </span>
               </div>
-            </div>
+            </div> --}}
             
 <!-- Modal toggle -->
 

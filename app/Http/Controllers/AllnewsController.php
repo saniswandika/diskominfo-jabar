@@ -17,22 +17,22 @@ class AllnewsController extends Controller
         $count = DB::table('posts')->where('posts.category_id','2')->count();
         $posts = post::select('posts.*','categories.name as nama_categori')->join('categories','categories.id','=' , 'posts.category_id')->where('posts.category_id','2')->get();
         
-        $publikasi = post::where('posts.category_id','4')->orderBy('created_at', 'DESC')->paginate(8);
+        $publikasi = post::where('posts.category_id','4')->where('posts.status','1')->orderBy('created_at', 'DESC')->paginate(8);
         $publikasi->setCollection($publikasi->sortByDesc('created_at'));
 
-        $layanan = post::where('posts.category_id','2')->orderBy('created_at', 'DESC')->paginate(8);
+        $layanan = post::where('posts.category_id','2')->where('posts.status','1')->orderBy('created_at', 'DESC')->paginate(8);
         $layanan->setCollection($layanan->sortByDesc('created_at'));
 
-        $berita = post::where('posts.category_id','3')->orderBy('created_at', 'DESC')->paginate(6);
+        $berita = post::where('posts.category_id','3')->where('posts.status','1')->orderBy('created_at', 'DESC')->paginate(6);
         $berita->setCollection($berita->sortByDesc('created_at'));
 
-        $publikasi = post::where('posts.category_id','4')->orderBy('created_at', 'DESC')->paginate(8);
-        $publikasi->setCollection($publikasi->sortByDesc('created_at'));
-
-        $program = post::where('posts.category_id','1')->orderBy('created_at', 'DESC')->paginate(8);
+        // $publikasi = post::select('posts.*','categories.name as nama_categori')->join('categories','categories.id','=' , 'posts.category_id')->where('posts.category_id','')->where('posts.status','1')->orderBy('updated_at', 'DESC')->paginate(8);
+        // // $publikasi = post::where('posts.category_id','4')->where('posts.status','1')->orderBy('created_at', 'DESC')->paginate(8);
+        // $publikasi->setCollection($publikasi->sortByDesc('created_at'));
+               $program = post::where('posts.category_id','1')->where('posts.status','1')->orderBy('created_at', 'DESC')->paginate(8);
         $program->setCollection($program->sortByDesc('created_at'));
 
-        // dd($layanan);
+        // dd($publikasi);
 
         // dd($berita);
         return view('halaman_depan.Allnews',compact('posts','publikasi','layanan','berita','program'));

@@ -24,8 +24,10 @@ class BeritaController extends Controller
         $categories = Category::all();
 
         $count = DB::table('posts')->where('posts.category_id','1')->count();
-        $posts = post::select('posts.*','categories.name as nama_categori')->join('categories','categories.id','=' , 'posts.category_id')->where('posts.category_id','1')->paginate(8);
-        return view('admin.cards',compact('count','posts','categories'));
+        $posts = post::select('posts.*','categories.name as nama_categori')->join('categories','categories.id','=' , 'posts.category_id')->where('posts.category_id','1')->orderBy('created_at', 'DESC')->paginate(10,['*'],'berita');     
+        $data = DB::table('posts')->where('posts.category_id','1')->sum('views');
+        
+        return view('admin.cards',compact('count','posts','categories','data'));
 
     }
 
@@ -132,14 +134,14 @@ class BeritaController extends Controller
     public function update(Request $request, Post $post)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'slug' => 'required|string|max:255',
-            'description' => 'required',
+            'title' => 'string|max:255',
+            'slug' => 'string|max:255',
+            'content' => 'string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
         $post->title = $request->title;
         $post->slug = Str::slug($request->slug);
-        $post->description = $request->description;
+        $post->content = $request->content;
         $post->category_id = $request->category_id;
         $post->save();
 

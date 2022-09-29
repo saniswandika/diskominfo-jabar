@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Collection;
+use Illuminate\Pagination\Paginator;
+
 use Illuminate\Pagination\LengthAwarePaginator;
 
 
@@ -26,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+
+        Paginator::defaultView('pagination::default');
     }
 }
